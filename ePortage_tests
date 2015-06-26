@@ -1,0 +1,385 @@
+#1
+Mezz - SN
+assign + label mezz SN
+The SN is labeled on the back of the mezzanine. Each SN is three digits, assigned sequentially in order of testing. The final three digits of each ngCCM's SN reference the SN of its mezzanine.
+0
+
+
+#2
+Mezz - Fuses
+install 1.5A fuses FH1 and FH2
+1.5A fuses are installed at FH1 and FH2 on the mezzanine.
+0
+
+
+#3
+Mezz - Jumpers
+install 2.5V jumpers J6 and J7
+J6 and J7 are both jumpered for 2.5V.
+0
+
+
+#4
+Mezz - Unprogrammed Currents
+verify I2.5 & I3.3 < 100mA
+The +2.5V and +3.3V power supply currents are measured with the FPGA in an unprogrammed state and no VTRx installed. Both currents are expected to be < 100mA.
+2
+I2.5,I3.3
+mA,mA
+#5
+Mezz - Unprogrammed Regulators
+verify TP5 ~1.2V & TP8 ~2.0V
+The 1.2V and 1.5V regulator outputs are measured with the FPGA in an unprogrammed state and no VTRx installed. It is expected to see the 1.5V regulator run high (~2V) until the FPGA is programmed.
+2
+V1.2,V1.5
+V,V
+#6
+Mezz - OSC1 Frequency
+verify OSC1 pins 4 & 5 are ~40MHz
+OSC1's frequency is measured via pins 4 & 5. The expected value is 40.0789MHz.
+2
+pin4,pin5
+MHz,MHz
+#7
+Mezz - Program
+device info, program, record checksum & currents
+A MicroSemi FlashPro4 programmer is connected to the mezzanine via JTAG connector J1. 'Device Info' is run to verify connectivity and then the FPGA is programmed with Lane0(VTRx) firmware. The 2.5V and 3.3V currents are recorded during programming.
+0
+
+
+#8
+Mezz - Verify
+run 'verify', confirm pass
+The 'Verify' function is performed to verify the program on the FPGA. A sucessful run with pass with 'Exit Code: 0'.
+0
+
+
+#9
+Mezz- Device Info
+device info, record checksum & DSN[128]
+After programming, 'Device Info' is run to verify that the checksum on the FPGA matches the firmware checksum and the device serial number (DSN[128]) is recorded.
+0
+
+
+#10
+Mezz - Programmed Current
+confirm I2.5 ~650mA, I3.3 ~100mA
+The 2.5V and 3.3V currents are measured with the FPGA programmed, but no VTRx installed. The expected values are ~650mA for the 2.5V current and ~100mA for the 3.3V current.
+2
+I2.5,I3.3
+mA,mA
+#11
+Mezz - Programmed Regulators
+verify TP5 ~1.2V & TP8 ~1.5V
+The 1.2V and 1.5V regulator outputs are measured with the FPGA programmed, but no VTRx installed. Now that the FPGA is programmed, the 1.5V regulator should be within 5% of its nominal output. The 1.2V regulator may not be within this 5% (usually ~1.27V) but this output is expected to come closer to its nominal value after the mezzanine is installed on a motherboard.
+2
+V1.2,V1.5
+V,V
+#12
+Mezz - VTRx
+power down, install SM VTRx, record SN, power up
+The mezzanine is powered down, a single-mode VTRx is installed, and the mezzanine is powered back up.
+0
+
+
+#13
+Mezz - VTRx Currents
+confirm I2.5 850~mA, I3.3 ~100mA
+The 2.5V and 3.3V currents are measured with the FPGA programmed and a VTRx installed. The expected values are ~850mA for the 2.5V current and ~100mA for the 3.3V current.
+2
+I2.5,I3.3
+mA,mA
+#14
+Mezz - VTRx Regulators
+verify TP5 ~1.2V & TP8 ~1.5V
+The 1.2V and 1.5V regulator outputs are measured with the FPGA programmed and a VTRx installed. These values should be the same as those in test 'Mezz - Programmed Regulators'.
+2
+V1.2,V1.5
+V,V
+#15
+Mezz - QPLL Frequency
+verify IC4 pins 15 & 16 are ~40MHz
+The QPLL's frequency is measured via IC4 pins 15 & 16. The expected value is 40.0789MHz.
+2
+pin15,pin16
+MHz,MHz
+#16
+Mezz - Nonrefclk Frequency
+verify IC4 pins 19 & 20 are ~40MHz
+The Nonrefclk's frequency is measured via IC4 pins 19 & 20. The expected value is 40.0789MHz. A somwewhat 'dirty' signal is to be expected.
+2
+pin19.pin20
+MHz,MHz
+#17
+Mezz - QPLL Status
+verify B2 is ~2.5V & B1 is ~0V
+The QPLL lock status is measured at B2. The expected signal is logic 1 represented by ~2.5V. The QPLL error status is measured at B1. The expected output is logic 0 represented by ~0V.
+2
+B2,B1
+V,V
+#18
+Moth - SN
+assign + label moth SN
+The SN is labeled on the back of the motherboard. Each SN is three digits, assigned sequentially in order of testing. The first three digits of each ngCCM's SN reference the SN of its motherboard.
+0
+
+
+#19
+Moth - Current Sans Modules
+verify +8V current is ~100mA
+The motherboard, with no DC/DC modules installed, is plugged into the QIE/Front-End emulator board which is powered with +8.0V. The 8V current draw is measured. The expected current is ~100mA.
+1
+I
+A
+#20
+Moth - Modules
+install DC/DC modules
+The board is powered down. All 3 DC/DC modules and thermal pads are installed in the appropriate locations. The board is powered back up.
+0
+
+
+#21
+Moth - Current With Modules
+verify 8V current is ~ 1A
+The 8V current draw is measured with all 3 DC/DC modules installed. The expected current is ~1A.
+1
+I
+A
+#22
+Moth - Voltages
+verify all 4 voltage test points
+The 1.2V regulator output and the 1.5V, 2.5V, and 3.3V DC/DC module outputs are measured via their respective test points. Each voltage is expected to be within 5% f its nominal value.
+4
+V1.2,V1.5,V2.5,V3.3
+V,V,V,V
+#23
+Moth - Program GlueLogic
+JTAG->J10, device info, program, record 4x SILSIG[32] & design name
+A MicroSemi FlashPro4 programmer is connected to the motherboard via JTAG connector J10. 'Device Info' is run to verify connectivity. All 4 GlueLogic FPGAs are chain-programmed and the SILGIG[32] and Design Name values are recorded for each FPGA's individual program file.
+0
+
+
+#24
+Moth - Verify GlueLogic
+run 'verify', confirm pass
+The 'Verify' function is performed to verify the program on the FPGA. A sucessful run with pass with 'Exit Code: 0'.
+0
+
+
+#25
+Moth - Device Info GlueLogic 
+device info, record 4x SILSIG[32] & design name
+'Device Info' is run to verify that the SILSIG[32] and Design Name values on the FPGA match the firmware values.
+0
+
+
+#26
+Moth - Program SecCCC
+JTAG->J9, device info, record checksum
+A MicroSemi FlashPro4 programmer is connected to the motherboard via JTAG connector J9. 'Device Info' is run to verify connectivity. The SecCCC FPGA is programmed and the program's checksum is recorded.
+0
+
+
+#27
+Moth - Verify SecCCC
+run 'verify', confirm pass
+The 'Verify' function is performed to verify the program on the FPGA. A sucessful run with pass with 'Exit Code: 0'.
+0
+
+
+#28
+Moth - Device Info SecCCC
+device info, record checksum & DSN[128]
+'Device Info' is run to confirm that the checksum on the FPGA matches the firmware checksum and the device serial number (DSN[128]) is recorded.
+0
+
+
+#29
+Moth - VTRx
+power down, install 2x MM VTRx, power up
+The motherboard is powered down, 2 multi-mode VTRx's are installed, and the board is powered back up.
+0
+
+
+#30
+Moth - Current With VTRx
+verify 8V current is ~?A
+The 8V supply current is measured with both VTRx's installed. The expected value is ~?A.
+1
+I
+A
+#31
+Moth - Voltages With VTRx
+verify 1.2V & 1.5V
+After the installation of the VTRx's, the 1.2V regulator and 1.5V module outputs are measured again. They should still be within 5% of their nominal values.
+4
+V1.2,V1.5,V2.5,V3.3
+V,V,V,V
+#32
+ngCCM - DIP Switches
+both mezz DIP switches on
+Both mezzanine DIP switches are set to 'ON'.
+0
+
+
+#33
+ngCCM - Mount mezzanine
+install the mezz
+The mezzanine is mounted on the motherboard to form the complete ngCCM. The SN of each ngCCM is the SN of its mezzanine appended to the SN of its motherboard. The ngCCM is connected to the QIE/Front-End emulator. At this stage, the USB serial debug conneector is connected to the mezzanine and mezzanine VTRx is connected to the GLIB via 2 single-mode optical fibers (GLIB->ngCCM & ngCCM->GLIB). It is also necessary to attenuate the GLIB->ngCCM connection using a fixed in-line optical attenuator of -?dB in order to avoid saturating the mezzanine VTRx photodiode. The GLIB is powered on (+12.0V).
+0
+
+
+#34
+ngCCM - Current
+power +8V, verify current ~1.5A, 2.5 & 3.3V LEDs lit, GLIB LEDs off
+The QIE/Front-End emulator is powered at +8.0V. The current consumed by the QIE/Front-End emulator and ngCCM is recorded. The expected current is ~1.5A. At this point, both the 2.5V and the 3.3V LEDs on the motherboard should be on and the two GLIB LEDs corresponding to the installed SPF+ optical module should be off.
+1
+I
+A
+#35
+ngCCM - Voltages & LEDs
+measure 1.2, 1.5, 2.5, 3.3V on mezz and moth
+The 1.2V, 1.5V, 2.5V, and 3.3V test points on both the mezzanine and the motherboard are probed. All measured voltages should be within 5% of their nominal values.
+8
+Vmth1.2,Vmth1.5,Vmth2.5,Vmth3.3,Vmz1.2,Vmz1.5,Vmz2.5,Vmz3.3
+V,V,V,V,V,V,V,V
+#36
+ngCCM - Status LEDs
+verify mezz LD1 solid, LD2 flashing
+At this point LED1 on the mezzanine should be lit solid indicating that the ngCCM is in 'normal mode' (as opposed to 'loopback mode') and LED2 should be slowly flashing (~1Hz) to indicate that optical communications have been established with the GLIB.
+0
+
+
+#37
+ngCCM - Debug Output
+run uart_BERtestmulti.py, attach output, record clock frq.
+The uart_BERtestmulti.py script is run to view the mezzanine serial debug output. The output should show that the IGloo2 FPGA is configured for L0(VTRX), REFCLK(0), and NORMAL mode. The BITSLIP number should be 5. The clock frequencies are expected to be ~40.0789MHz. The error count should not be increasing.
+0
+
+
+#38
+ngCCM - Error Count
+disconnect fibers, verify err_count increases, reconnect
+The optical fibers between the GLIB and the ngCCM are disconnected. The error count on the mezzanine serial debug output should increase and overflow the register very quickly. The fibers are then reconnected after which the error count should remain at the same value.
+0
+
+
+#39
+ngCCM - Differential Clocks
+probe MCLK0-13 (+ -> -), record frq. & V<+-1V
+On the QIE/Front-End Emulator, MCLK0 - MCLK13 are probed (from + to -) with a differential probe. The frequency (expected to be ~40.0789MHz) is recorded. It is verified that the edges are monotonic and that the signal does not exceed +-1.0V.
+0
+
+
+#40
+ngCCM - Positive Clocks
+probe MCLK0-13 (+ -> GND), record frq. & V+ ~2.2V, V- ~1.6V
+On the QIE/Front-End Emulator, MCLK0 - MCLK13 are probed (from + to ground) with a differential probe. The higher steady state voltage is confirmed to be between 2.135V and 2.420V with and that no overshoots exceed 3.0V. The lower steady state voltage is confirmed to be between 1.490V and 1.825V and that no undershoots go below 1.0V.
+0
+
+
+#41
+ngCCM - Negative Clocks
+probe MCLK0-13 (- -> GND), record frq. & V+ ~2.2V, V- ~1.6V
+On the QIE/Front-End Emulator, MCLK0 - MCLK13 are probed (from - to ground) with a differential probe. The higher steady state voltage is confirmed to be between 2.135V and 2.420V with and that no overshoots exceed 3.0V. The lower steady state voltage is confirmed to be between 1.490V and 1.825V and that no undershoots go below 1.0V.
+0
+
+
+#42
+ngCCM - GLIBtool ADC
+GBT>NGCCM>ADC
+In the GLIBtool software, GBT>NGCCM>ADC is run and the output is recorded. All temperature slots should read ~-273C. The total power should be less than 13.0W, the 3.3V power should be less than 8W, the 2.5V power should be less than 5W, and the combined 1.2V and 1.5V power should be less that 0.35W. Finally, all measured ngCCM temperatures should be less thatn 45C.
+0
+
+
+#43
+ngCCM - GLIBtool TEMP
+GBT>NGCCM>TEMP
+In the GLIBtool software, GBT>NGCCM>TEMP is run. The two on-board 1-wire temperature devices should read less than 45C.
+0
+
+
+#44
+ngCCM - GLIBtool TEST IO
+GBT>NGCCM>TEST>IO
+In the GLIBtool software, GBT>NGCCM>TEST>IO is run. This semi-automatically tests the backplane outputs one at a time. If any tests fail, the output is recorded. If all tests pass, there is no output.
+0
+
+
+#45
+ngCCM - GLIBtool TEST I2C
+GBT>NGCCM>TEST>I2C
+In the GLIBtool software, GBT>NGCCM>TEST>I2C is run. This test reads and writes I2C on all 13 of the backplane slots. If any tests fail, the output is recorded. If all tests pass, there is no output.
+0
+
+
+#46
+ngCCM - GLIBtool TEST TEMP
+GBT>NGCCM>TEST>TEMP
+In the GLIBtool software, GBT>NGCCM>TEST>TEMP is run. This tests the reading of all temperature ADCs. If any tests fail, the output is recorded. If all tests pass, there is no output.
+0
+
+
+#47
+ngCCM - GLIBtool ERR_STATUS
+GBT>NGCCM>ERR_STATUS
+In the GLIBtool software, GBT>NGCCM>ERR_STATUS is run. The uart_BERtestMulti.py data is refreshed and it is verified that the 'GLIB TX->ngCCM RX Error Count' agrees with the 'Error_Count' reported by uart_BERtestMulti.py (this number should not have increased from the 'Debug Output' test).
+0
+
+
+#48
+ngCCM - GLIBtool TEST CNTRM
+GBT>NGCCM>TEST>CNTRM
+In the GLIBtool software, GBT>NGCCM>TEST>CNTRM is run. A semi-automatic test is run to ensure that the ngCCM responds appropriately to commands sent by the counting room switch actuator device connected via CAT cable. If any tests fail, the output is recorded. If all tests pass, there is no output.
+0
+
+
+#49
+ngCCM - GLIBtoot TEST JTAG
+GBT>NGCCM>TEST>JTAG
+In the GLIBtool software, GBT>NGCCM>TEST>JTAG is run. A semi-automatic test is run to ensure that the ngCCM is able to reprogram an Igloo2 FPGA eval board through each of 3 backplane JTAG connectors. If any tests fail, the output is recorded. If all tests pass, there is no output.
+0
+
+
+#50
+ngCCM - GLIBtool MEZZ_RD
+GBT>NGCCM>MEZZ_RD (reg. 4 & 6)
+In the GLIBtool software, GBT>NGCCM>MEZZ_RD is run twice, first reading register 4 and then register 6. The outputs are recorded and it is verified that register 4 reports the FPGA version: 02:02 and Board ID: 'igloo2 UMD' and that register 6 agrees with the 'Error_Count' reported by uart_BERtestMulti.py.
+0
+
+
+#51
+ngCCM - 6V Current
+supply voltage to 6, verify current ~1.5A
+The ngCCM and QIE/Front-End emulator are powered down, and then powered back up with +6.0V supplied. The supply current is recorded. The expected value is ~1.5A.
+1
+I
+A
+#52
+ngCCM - 6V Voltages & LEDs
+measure 1.2, 1.5, 2.5, 3.3V on mezz and moth
+While the supply votlage is +6.0V, the 1.2V, 1.5V, 2.5V, and 3.3V test points on both the mezzanine and the motherboard are probed. All measured voltages should be within 5% of their nominal values.
+8
+Vmth1.2,Vmth1.5,Vmth2.5,Vmth3.3,Vmz1.2,Vmz1.5,Vmz2.5,Vmz3.3
+V,V,V,V,V,V,V,V
+#53
+ngCCM - 6V GLIBtool ADC
+GBT>NGCCM>ADC
+While the supply votlage is +6.0V, in the GLIBtool software, GBT>NGCCM>ADC is run and the output is recorded. All temperature slots should read ~-273C. The total power should be less than 13.0W, the 3.3V power should be less than 8W, the 2.5V power should be less than 5W, and the combined 1.2V and 1.5V power should be less that 0.35W. Finally, all measured ngCCM temperatures should be less thatn 45C.
+0
+
+
+#54
+ngCCM - 6V GLIBtool TEMP
+GBT>NGCCM>TEMP
+While the supply votlage is +6.0V, in the GLIBtool software, GBT>NGCCM>TEMP is run. The two on-board 1-wire temperature devices should read less than 45C.
+0
+
+
+#55
+ngCCM - 6V GLIBtool MEZZ_RD
+GBT>NGCCM>MEZZ_RD
+While the supply votlage is +6.0V, in the GLIBtool software, GBT>NGCCM>MEZZ_RD is run twice, first reading register 4 and then register 6. The outputs are recorded and it is verified that register 4 reports the FPGA version: 02:02 and Board ID: 'igloo2 UMD' and that register 6 agrees with the 'Error_Count' reported by uart_BERtestMulti.py.
+0
+
+
