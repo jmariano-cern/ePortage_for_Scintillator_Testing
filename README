@@ -1,3 +1,10 @@
 TO BE EXPANDED UPON
 
-intstall.py
+you must have intalled apache2 server (httpd) and mysql/msyql server (mysql/mysqld)
+
+first git clone:
+git clone https://github.com/jmariano-cern/ePortage_for_Scintillator_Testing.git
+
+then, run install.py
+
+the /cgi-bin directory contains the dynamic scripts, move them to /var/www or modify the httpd.conf accordingly
